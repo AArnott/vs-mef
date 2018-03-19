@@ -169,6 +169,11 @@ namespace Microsoft.VisualStudio.Composition.Tests
             var catalog = TestUtilities.EmptyCatalog.AddParts(
                 await TestUtilities.V2Discovery.CreatePartsAsync(typeof(PartThatLazyImportsExportWithTypeMetadataViaTMetadata), typeof(AnExportWithMetadataTypeValue)));
             var catalogCache = await this.SaveCatalogAsync(catalog);
+
+            var freshResolver = new Resolver(new ThrowingAssemblyLoader());
+            catalog = await new CachedCatalog().LoadAsync(catalogCache, freshResolver);
+            catalogCache.Position = 0;
+
             var configuration = CompositionConfiguration.Create(catalog);
             var compositionCache = await this.SaveConfigurationAsync(configuration);
 
@@ -389,6 +394,16 @@ namespace Microsoft.VisualStudio.Composition.Tests
                 copy.Position = 0;
                 return copy;
             }
+        }
+
+        /// <summary>
+        /// An <see cref="IAssemblyLoader"/> that throws for every request.
+        /// </summary>
+        private class ThrowingAssemblyLoader : IAssemblyLoader
+        {
+            public Assembly LoadAssembly(string assemblyFullName, string codeBasePath) => throw new InvalidOperationException($"Unexpected request to load {assemblyFullName ?? codeBasePath}");
+
+            public Assembly LoadAssembly(AssemblyName assemblyName) => throw new InvalidOperationException($"Unexpected request to load {assemblyName}");
         }
     }
 }
