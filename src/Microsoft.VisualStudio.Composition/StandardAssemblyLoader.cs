@@ -11,14 +11,26 @@ namespace Microsoft.VisualStudio.Composition
     using System.Reflection;
 
     /// <summary>
-    /// A typical .NET Framework implementation of the <see cref="IAssemblyLoader"/> interface.
+    /// The default implementation of the <see cref="IAssemblyLoader"/> interface.
     /// </summary>
-    internal class StandardAssemblyLoader : IAssemblyLoader
+    public class StandardAssemblyLoader : IAssemblyLoader
     {
         /// <summary>
         /// A cache of assembly names to loaded assemblies.
         /// </summary>
         private readonly Dictionary<AssemblyName, Assembly> loadedAssemblies = new Dictionary<AssemblyName, Assembly>(ByValueEquality.AssemblyName);
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StandardAssemblyLoader"/> class.
+        /// </summary>
+        private StandardAssemblyLoader()
+        {
+        }
+
+        /// <summary>
+        /// Gets a shareable instance of the <see cref="StandardAssemblyLoader"/>.
+        /// </summary>
+        public static StandardAssemblyLoader DefaultInstance { get; } = new StandardAssemblyLoader();
 
         /// <inheritdoc />
         public Assembly LoadAssembly(AssemblyName assemblyName)
