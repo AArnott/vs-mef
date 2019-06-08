@@ -63,6 +63,32 @@ namespace Microsoft.VisualStudio.Composition.Tests
         }
 
         [Fact]
+        public async Task CreatePartsAsync_Assembly_Progress_IncrementalProgressUpdates()
+        {
+            DiscoveryProgress lastReceivedUpdate = default(DiscoveryProgress);
+            int progressUpdateCount = 0;
+            var progress = new SynchronousProgress<DiscoveryProgress>(update =>
+            {
+                progressUpdateCount++;
+                Assert.NotNull(update.Status);
+                ////Assert.True(update.Completion >= lastReceivedUpdate.Completion); // work can be discovered that regresses this legitimately
+                Assert.True(update.Completion <= 1);
+                Assert.True(update.Status != lastReceivedUpdate.Status || update.Completion != lastReceivedUpdate.Completion);
+                this.output.WriteLine(
+                    "Completion reported: {0} ({1}/{2}): {3}",
+                    update.Completion,
+                    update.CompletedSteps,
+                    update.TotalSteps,
+                    update.Status);
+                lastReceivedUpdate = update;
+            });
+            await TestUtilities.V1Discovery.CreatePartsAsync(typeof(AssemblyDiscoveryTests.DiscoverablePart1).GetTypeInfo().Assembly, progress);
+            progress.RethrowAnyExceptions();
+            Assert.True(lastReceivedUpdate.Completion > 0);
+            Assert.True(progressUpdateCount > 2);
+        }
+
+        [Fact]
         public async Task Combined_IncrementalProgressUpdates()
         {
             var discovery = PartDiscovery.Combine(TestUtilities.V2Discovery, TestUtilities.V1Discovery);

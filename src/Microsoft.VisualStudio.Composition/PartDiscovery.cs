@@ -88,6 +88,20 @@ namespace Microsoft.VisualStudio.Composition
             return this.CreatePartsAsync(new[] { assembly }, null, cancellationToken);
         }
 
+        /// <summary>
+        /// Reflects over an assembly and produces MEF parts for every applicable type.
+        /// </summary>
+        /// <param name="assembly">The assembly to search for MEF parts.</param>
+        /// <param name="progress">An optional way to receive progress updates on how discovery is progressing.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A set of generated parts.</returns>
+        public Task<DiscoveredParts> CreatePartsAsync(Assembly assembly, IProgress<DiscoveryProgress> progress, CancellationToken cancellationToken = default)
+        {
+            Requires.NotNull(assembly, nameof(assembly));
+
+            return this.CreatePartsAsync(new[] { assembly }, progress, cancellationToken);
+        }
+
         public abstract bool IsExportFactoryType(Type type);
 
         /// <summary>

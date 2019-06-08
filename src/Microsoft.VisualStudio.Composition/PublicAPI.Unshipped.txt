@@ -1,0 +1,1 @@
+Microsoft.VisualStudio.Composition.PartDiscovery.CreatePartsAsync(System.Reflection.Assembly assembly, System.IProgress<Microsoft.VisualStudio.Composition.DiscoveryProgress> progress, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Microsoft.VisualStudio.Composition.DiscoveredParts>
