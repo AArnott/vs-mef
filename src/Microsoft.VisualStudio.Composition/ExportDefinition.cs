@@ -12,7 +12,7 @@ namespace Microsoft.VisualStudio.Composition
 
     [DebuggerDisplay("{" + nameof(ContractName) + ",nq}")]
     [MessagePackObject]
-    public class ExportDefinition : IEquatable<ExportDefinition>
+    public partial class ExportDefinition : IEquatable<ExportDefinition>
     {
         public ExportDefinition(string contractName, IReadOnlyDictionary<string, object?> metadata)
         {

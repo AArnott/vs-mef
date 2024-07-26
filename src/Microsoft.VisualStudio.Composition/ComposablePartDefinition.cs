@@ -350,6 +350,7 @@ public class ComposablePartDefinition : IEquatable<ComposablePartDefinition>
         this.ImportingConstructorOrFactoryRef?.GetInputAssemblies(assemblies);
     }
 
+    [ExcludeFormatterFromSourceGeneratedResolver]
     internal class Formatter(Resolver compositionResolver) : IMessagePackFormatter<ComposablePartDefinition?>
     {
         private readonly MetadataDictionaryFormatter metadataDictionaryFormatter = new(compositionResolver);

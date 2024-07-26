@@ -9,7 +9,7 @@ namespace Microsoft.VisualStudio.Composition
     using MessagePack;
 
     [MessagePackObject]
-    public class ExportTypeIdentityConstraint : IImportSatisfiabilityConstraint, IDescriptiveToString
+    public partial class ExportTypeIdentityConstraint : IImportSatisfiabilityConstraint, IDescriptiveToString
     {
         public ExportTypeIdentityConstraint(Type typeIdentity)
         {

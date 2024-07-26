@@ -14,7 +14,7 @@ namespace Microsoft.VisualStudio.Composition
 
     [DebuggerDisplay("{" + nameof(ContractName) + ",nq} ({Cardinality})")]
     [MessagePackObject]
-    public class ImportDefinition : IEquatable<ImportDefinition>
+    public partial class ImportDefinition : IEquatable<ImportDefinition>
     {
         [IgnoreMember]
         private readonly ImmutableList<IImportSatisfiabilityConstraint> exportConstraints;

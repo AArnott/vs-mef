@@ -7,6 +7,7 @@ using System.Collections.Immutable;
 using MessagePack;
 using MessagePack.Formatters;
 
+[ExcludeFormatterFromSourceGeneratedResolver]
 internal class MetadataDictionaryFormatter(Resolver compositionResolver) : IMessagePackFormatter<IReadOnlyDictionary<string, object?>>
 {
     private readonly MetadataObjectFormatter metadataObjectFormatter = new(compositionResolver);

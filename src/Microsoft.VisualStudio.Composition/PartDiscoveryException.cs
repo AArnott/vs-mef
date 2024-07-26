@@ -78,7 +78,7 @@ namespace Microsoft.VisualStudio.Composition
             info.AddValue(nameof(this.ScannedType), this.ScannedType);
         }
 
-        private class Formatter : IMessagePackFormatter<PartDiscoveryException?>
+        internal class Formatter : IMessagePackFormatter<PartDiscoveryException?>
         {
             public static readonly Formatter Instance = new();
 

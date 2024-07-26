@@ -94,7 +94,7 @@ namespace Microsoft.VisualStudio.Composition.Reflection
             this.DeclaringType.GetInputAssemblies(assemblies);
         }
 
-        private class Formatter : IMessagePackFormatter<ParameterRef?>
+        internal class Formatter : IMessagePackFormatter<ParameterRef?>
         {
             public static readonly Formatter Instance = new();
             private const int ExpectedLength = 2;

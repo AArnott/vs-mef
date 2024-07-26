@@ -262,6 +262,7 @@ namespace Microsoft.VisualStudio.Composition
             return false;
         }
 
+        [ExcludeFormatterFromSourceGeneratedResolver]
         internal class Formatter(Resolver compositionResolver) : IMessagePackFormatter<ComposableCatalog?>
         {
             /// <inheritdoc/>

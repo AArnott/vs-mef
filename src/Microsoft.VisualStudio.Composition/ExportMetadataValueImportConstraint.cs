@@ -8,7 +8,7 @@ namespace Microsoft.VisualStudio.Composition
     using MessagePack;
 
     [MessagePackObject]
-    public class ExportMetadataValueImportConstraint : IImportSatisfiabilityConstraint, IDescriptiveToString
+    public partial class ExportMetadataValueImportConstraint : IImportSatisfiabilityConstraint, IDescriptiveToString
     {
         public ExportMetadataValueImportConstraint(string name, object? value)
         {

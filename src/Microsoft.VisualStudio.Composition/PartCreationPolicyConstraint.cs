@@ -127,7 +127,7 @@ namespace Microsoft.VisualStudio.Composition
         /// This formatter is designed to avoid invoking the constructor during deserialization,
         /// which helps to prevent the allocation of many redundant classes.
         /// </summary>
-        private class Formatter : IMessagePackFormatter<PartCreationPolicyConstraint?>
+        internal class Formatter : IMessagePackFormatter<PartCreationPolicyConstraint?>
         {
             public static readonly Formatter Instance = new();
 

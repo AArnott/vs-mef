@@ -15,7 +15,7 @@ namespace Microsoft.VisualStudio.Composition
     using Microsoft.VisualStudio.Composition.Formatter;
     using Microsoft.VisualStudio.Composition.Reflection;
 
-    public class RuntimeComposition : IEquatable<RuntimeComposition>
+    public partial class RuntimeComposition : IEquatable<RuntimeComposition>
     {
         private readonly ImmutableHashSet<RuntimePart> parts;
         private readonly IReadOnlyDictionary<TypeRef, RuntimePart> partsByType;
@@ -317,7 +317,7 @@ namespace Microsoft.VisualStudio.Composition
                 return result;
             }
 
-            private class Formatter : IMessagePackFormatter<RuntimePart?>
+            internal class Formatter : IMessagePackFormatter<RuntimePart?>
             {
                 public static readonly Formatter Instance = new();
 
@@ -582,6 +582,7 @@ namespace Microsoft.VisualStudio.Composition
                 return result;
             }
 
+            [ExcludeFormatterFromSourceGeneratedResolver]
             internal class Formatter(Resolver compositionResolver) : IMessagePackFormatter<RuntimeImport?>
             {
                 private readonly MetadataDictionaryFormatter metadataDictionaryFormatter = new(compositionResolver);
@@ -731,7 +732,7 @@ namespace Microsoft.VisualStudio.Composition
         }
 
         [MessagePackObject]
-        public class RuntimeExport : IEquatable<RuntimeExport>
+        public partial class RuntimeExport : IEquatable<RuntimeExport>
         {
             [IgnoreMember]
             private MemberInfo? member;
@@ -825,6 +826,7 @@ namespace Microsoft.VisualStudio.Composition
             }
         }
 
+        [ExcludeFormatterFromSourceGeneratedResolver]
         internal class Formatter(Resolver compositionResolver) : IMessagePackFormatter<RuntimeComposition?>
         {
             /// <inheritdoc/>

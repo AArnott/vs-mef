@@ -222,7 +222,7 @@ namespace Microsoft.VisualStudio.Composition
             this.ComposablePartTypeRef.GetInputAssemblies(assemblies);
         }
 
-        private class Formatter : IMessagePackFormatter<ImportDefinitionBinding?>
+        internal class Formatter : IMessagePackFormatter<ImportDefinitionBinding?>
         {
             public static readonly Formatter Instance = new();
 

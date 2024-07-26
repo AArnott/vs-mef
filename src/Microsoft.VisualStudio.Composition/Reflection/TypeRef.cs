@@ -474,6 +474,7 @@ namespace Microsoft.VisualStudio.Composition.Reflection
             }
         }
 
+        [ExcludeFormatterFromSourceGeneratedResolver]
         internal class Formatter(Resolver compositionResolver) : IMessagePackFormatter<TypeRef?>
         {
             private const int ExpectedLength = 8;

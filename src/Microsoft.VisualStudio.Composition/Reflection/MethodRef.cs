@@ -14,7 +14,7 @@ namespace Microsoft.VisualStudio.Composition.Reflection
 
     [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
     [MessagePackObject]
-    public class MethodRef : MemberRef, IEquatable<MethodRef>
+    public partial class MethodRef : MemberRef, IEquatable<MethodRef>
     {
         /// <summary>
         /// Gets the string to display in the debugger watch window for this value.

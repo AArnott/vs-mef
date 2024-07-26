@@ -13,7 +13,7 @@ namespace Microsoft.VisualStudio.Composition
     using MessagePack.Formatters;
     using Microsoft.VisualStudio.Composition.Reflection;
 
-    public class ImportMetadataViewConstraint : IImportSatisfiabilityConstraint, IDescriptiveToString
+    public partial class ImportMetadataViewConstraint : IImportSatisfiabilityConstraint, IDescriptiveToString
     {
         private static readonly ImportMetadataViewConstraint EmptyInstance = new ImportMetadataViewConstraint(ImmutableDictionary<string, MetadatumRequirement>.Empty, resolver: null);
 
@@ -195,7 +195,7 @@ namespace Microsoft.VisualStudio.Composition
         }
 
         [MessagePackObject]
-        public struct MetadatumRequirement
+        public partial struct MetadatumRequirement
         {
             public MetadatumRequirement(TypeRef valueType, bool required)
                             : this()
@@ -214,6 +214,7 @@ namespace Microsoft.VisualStudio.Composition
             public bool IsMetadataumValueRequired { get; private set; }
         }
 
+        [ExcludeFormatterFromSourceGeneratedResolver]
         internal class Formatter(Resolver compositionResolver) : IMessagePackFormatter<ImportMetadataViewConstraint?>
         {
             public ImportMetadataViewConstraint? Deserialize(ref MessagePackReader reader, MessagePackSerializerOptions options)

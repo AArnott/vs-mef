@@ -9,7 +9,7 @@ namespace Microsoft.VisualStudio.Composition
     using MessagePack;
 
     [MessagePackObject]
-    public class DiscoveredParts
+    public partial class DiscoveredParts
     {
         public static readonly DiscoveredParts Empty = new DiscoveredParts(ImmutableHashSet.Create<ComposablePartDefinition>(), ImmutableList.Create<PartDiscoveryException>());
 

@@ -11,6 +11,7 @@ using MessagePack.Formatters;
 using Microsoft.VisualStudio.Composition.Reflection;
 using static Microsoft.VisualStudio.Composition.LazyMetadataWrapper;
 
+[ExcludeFormatterFromSourceGeneratedResolver]
 internal class MetadataObjectFormatter(Resolver compositionResolver) : IMessagePackFormatter<object?>
 {
     public void Serialize(ref MessagePackWriter messagePackWriter, object? value, MessagePackSerializerOptions options)
