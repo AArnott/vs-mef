@@ -14,6 +14,10 @@ namespace Microsoft.VisualStudio.Composition
     /// </summary>
     internal class StandardAssemblyLoader : IAssemblyLoader
     {
+#if NET
+        private static readonly AssemblyLoadContext FallbackAlc = AssemblyLoadContext.GetLoadContext(Assembly.GetExecutingAssembly()) ?? AssemblyLoadContext.Default;
+#endif
+
         /// <summary>
         /// A cache of assembly names to loaded assemblies.
         /// </summary>
@@ -30,7 +34,13 @@ namespace Microsoft.VisualStudio.Composition
 
             if (assembly == null)
             {
+#if NET
+                // Avoid Assembly.Load(AssemblyName) because it always loads the assembly into AssemblyLoadContext.Default,
+                // which has been known to cause problems for ServiceHub services.
+                assembly = (AssemblyLoadContext.CurrentContextualReflectionContext ?? FallbackAlc).LoadFromAssemblyName(assemblyName);
+#else
                 assembly = Assembly.Load(assemblyName);
+#endif
 
                 lock (this.loadedAssemblies)
                 {
