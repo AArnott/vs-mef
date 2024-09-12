@@ -129,6 +129,35 @@ namespace Microsoft.VisualStudio.Composition
         }
 
         /// <summary>
+        /// Produces a catalog with parts removed.
+        /// </summary>
+        /// <returns>The new catalog (or <see langword="this" /> if <paramref name="parts"/> contains no parts that were in the catalog.)</returns>
+        public ComposableCatalog RemoveParts(IEnumerable<ComposablePartDefinition> parts)
+        {
+            ImmutableHashSet<ComposablePartDefinition>.Builder newParts = this.parts.ToBuilder();
+            ImmutableDictionary<string, ImmutableList<ExportDefinitionBinding>>.Builder exportsByContract = this.exportsByContract.ToBuilder();
+            ImmutableHashSet<TypeRef>.Builder typesBackingParts = this.typesBackingParts.ToBuilder();
+            DiscoveredParts discoveredParts = this.DiscoveredParts;
+
+            bool changesApplied = false;
+            foreach (ComposablePartDefinition part in parts)
+            {
+                if (newParts.Remove(part))
+                {
+                    changesApplied = true;
+                    part.ExportDefinitions;
+                }
+            }
+
+            if (!changesApplied)
+            {
+                return this;
+            }
+
+            return new ComposableCatalog(newParts.ToImmutable(), exportsByContract.ToImmutable(), typesBackingParts.ToImmutable(), discoveredParts, this.Resolver);
+        }
+
+        /// <summary>
         /// Merges this catalog with another one, including parts, discovery details and errors.
         /// </summary>
         /// <param name="catalogToMerge">The catalog to be merged with this one.</param>
